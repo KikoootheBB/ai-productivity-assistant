@@ -1,4 +1,5 @@
 import streamlit as st
+from assistant.pdf import extract_text
 
 # Page configuration
 st.set_page_config(
@@ -7,6 +8,18 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
+def go_to_pdf():
+    st.session_state.selected_page = "📄 PDF Summarizer"
+
+def go_to_email():
+    st.session_state.selected_page =  "✉️ Email Generator"
+
+def go_to_task():
+    st.session_state.selected_page = "✅ Task Organizer"
+
+def go_to_text():
+    st.session_state.selected_page = "✍️ Text Improver"
 
 # Sidebar
 with st.sidebar:
@@ -23,7 +36,8 @@ with st.sidebar:
             "✉️ Email Generator",
             "✅ Task Organizer",
             "✍️ Text Improver",
-        ]
+        ],
+        key="selected_page"
     )
 
     st.divider()
@@ -88,8 +102,12 @@ if page == "🏠 Home":
             "Upload a PDF and generate a concise summary."
         )
 
-        if st.button("Summarize PDF", use_container_width=True):
-            st.info("PDF Summarizer coming soon.")
+        if st.button(
+            "Summarize PDF", 
+            use_container_width=True, 
+            on_click = go_to_pdf
+        ):
+            pass
 
     with col2:
         st.subheader("✉️ Email Generator")
@@ -150,7 +168,8 @@ elif page == "📄 PDF Summarizer":
             type="primary",
             use_container_width=True
         ):
-            st.info("AI summarization will be added next.")
+            result = extract_text(uploaded_file)
+            st.write(result)
 
 # EMAIL GENERATOR
 elif page == "✉️ Email Generator":

@@ -1,5 +1,6 @@
 import streamlit as st
 from assistant.pdf import extract_text
+from assistant.AI import summarize_text
 
 # Page configuration
 st.set_page_config(
@@ -168,8 +169,9 @@ elif page == "📄 PDF Summarizer":
             type="primary",
             use_container_width=True
         ):
-            result = extract_text(uploaded_file)
-            st.write(result)
+            pdf_text = extract_text(uploaded_file)
+            summary = summarize_text(pdf_text)
+            st.write(summary)
 
 # EMAIL GENERATOR
 elif page == "✉️ Email Generator":

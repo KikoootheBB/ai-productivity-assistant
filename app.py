@@ -1,6 +1,6 @@
 import streamlit as st
 from assistant.pdf import extract_text
-from assistant.AI import summarize_text
+from assistant.AI import summarize_text, generate_email, organize_tasks, text_improve
 
 # Page configuration
 st.set_page_config(
@@ -248,7 +248,8 @@ elif page == "✅ Task Organizer":
         if not tasks:
             st.warning("Please enter at least one task.")
         else:
-            st.info("AI task organization will be added next.")
+            organized = organize_tasks(tasks)
+            st.write(organized)
 
 # TEXT IMPROVER
 elif page == "✍️ Text Improver":

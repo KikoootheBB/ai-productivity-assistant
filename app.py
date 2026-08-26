@@ -158,7 +158,7 @@ elif page == "📄 PDF Summarizer":
     uploaded_file = st.file_uploader(
         "Choose a PDF file",
         type=["pdf"],
-        key="pdf_update"
+        key="pdf_upload"
     )
 
     if uploaded_file:
@@ -213,10 +213,11 @@ elif page == "✉️ Email Generator":
         type="primary",
         use_container_width=True
     ):
-        if not topic:
+        if not topic.strip():
             st.warning("Please describe what the email should be about.")
         else:
-            st.info("AI email generation will be added next.")
+            proper_email = generate_email(topic, language, tone)
+            st.write(proper_email)
 
 # TASK ORGANIZER
 elif page == "✅ Task Organizer":
@@ -245,7 +246,7 @@ elif page == "✅ Task Organizer":
         type="primary",
         use_container_width=True
     ):
-        if not tasks:
+        if not tasks.strip():
             st.warning("Please enter at least one task.")
         else:
             organized = organize_tasks(tasks)
@@ -283,7 +284,8 @@ elif page == "✍️ Text Improver":
         type="primary",
         use_container_width=True
     ):
-        if not text:
+        if not text.strip():
             st.warning("Please enter some text.")
         else:
-            st.info("AI text improvement will be added next.")
+            final_text = text_improve(text, action)
+            st.write(final_text)

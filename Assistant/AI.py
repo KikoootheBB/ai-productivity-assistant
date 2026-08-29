@@ -1,6 +1,6 @@
 from openai import OpenAI
 from dotenv import load_dotenv
-from assistant.prompts import pdf_prompt
+from .prompts import SUMMARIZE_PROMPT, EMAIL_GEN_PROMPT, TASK_ORGANIZER_PROMPT, TEXT_IMPROVER_PROMPT
 import os
 
 load_dotenv()
@@ -10,61 +10,39 @@ client = OpenAI(
 )
 
 def summarize_text(text):
-    prompt = f"""pdf_
-        Summarize the following document.
-
-        Provide:
-        - A short overview
-        - The main points
-        - The most important conclusions
-
-        Document:
-
-        {text}
-        """
+    prompt = SUMMARIZE_PROMPT.format(
+        text=text
+    )
+    
     response = client.responses.create(model="gpt-5-nano", input=prompt)
 
     return response.output_text
 
-def generate_email(text, lag, tone):
-    prompt = f"""
-        Generate a concise, well-written email from the subject provided below. Use the selected language and tone, and infer appropriate wording and structure from the subject.
-        Keep it natural, professional, and to the point.
-
-        Subject: {text}
-
-        Language: {lag}
-
-        Tone: {tone}
-        """
+def generate_email(text, lang, tone):
+    prompt = EMAIL_GEN_PROMPT.format(
+        text=text,
+        lang=lang,
+        tpne=tone
+    )
     response = client.responses.create(model="gpt-5-nano", input=prompt)
 
     return response.output_text
 
-def organize_tasks(text):
-    prompt = f"""
-        Organize these tasks into a clear, prioritized action list.
-        Group related tasks, identify dependencies, and order them by urgency and importance. 
-        Keep each task concise and actionable.
+def organize_tasks(tasks):
+    prompt = TASK_ORGANIZER_PROMPT.format(
+        tasks=tasks
+    )
 
-        Tasks:
-
-        {text}
-        """
     response = client.responses.create(model="gpt-5-nano", input=prompt)
 
     return response.output_text
 
 def text_improve(text, task):
-    prompt = f"""
-        Process the provided text according to the selected task.
-        Follow the given task precisely, preserve the original meaning, and return only the requested result.
+    prompt = TEXT_IMPROVER_PROMPT.format(
+        text=text,
+        task=task
+    )
 
-        Task: {task}
-
-        Text: {text}
-
-        """
     response = client.responses.create(model="gpt-5-nano", input=prompt)
 
     return response.output_text

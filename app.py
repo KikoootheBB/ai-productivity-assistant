@@ -49,15 +49,6 @@ with st.sidebar:
 # HOME
 if page == "🏠 Home":
 
-    # # Simple titles auto left
-    # st.title("AI Productivity Assistant")
-    # st.subheader("Your personal AI-powered productivity toolkit.")
-
-    # st.write(
-    #     "Use AI to summarize documents, generate emails, "
-    #     "organize tasks and improve your writing."
-    # )
-
     st.markdown(
     """
     <style>
@@ -94,13 +85,18 @@ if page == "🏠 Home":
 
     st.divider()
 
-    # Three columns for the main tools
-    col1, col2, col3 = st.columns(3)
+    # Two by two grid for the tools
+    col1, col2 = st.columns(2)
 
     with col1:
-        st.subheader("📄 PDF Summarizer")
-        st.write(
-            "Upload a PDF and generate a concise summary."
+        st.markdown(
+            """
+            <div style="text-align: center;">
+                <h3>📄 PDF Summarizer</h3>
+                <p>Upload a PDF and generate a concise summary.</p>
+            </div>
+            """,
+            unsafe_allow_html=True
         )
 
         if st.button(
@@ -111,22 +107,60 @@ if page == "🏠 Home":
             pass
 
     with col2:
-        st.subheader("✉️ Email Generator")
-        st.write(
-            "Generate professional emails using AI."
-        )
+        st.markdown(
+            """
+            <div style="text-align: center;">
+                <h3>✉️ Email Generator</h3>
+                <p>Generate professional emails using AI.</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        ) 
 
-        if st.button("Generate Email", use_container_width=True):
-            st.info("Email Generator coming soon.")
+        if st.button(
+            "Generate Email", 
+            use_container_width=True, 
+            on_click = go_to_email
+        ):
+            pass
+
+    col3, col4 = st.columns(2)
 
     with col3:
-        st.subheader("✅ Task Organizer")
-        st.write(
-            "Organize and prioritize your tasks."
+        st.markdown(
+            """
+            <div style="text-align: center;">
+                <h3>✅ Task Organizer</h3>
+                <p>Organize and prioritize your tasks.</p>
+            </div>
+            """,
+            unsafe_allow_html=True
         )
 
-        if st.button("Organize Tasks", use_container_width=True):
-            st.info("Task Organizer coming soon.")
+        if st.button(
+            "Organize Tasks", 
+            use_container_width=True, 
+            on_click = go_to_task
+        ):
+            pass
+            
+    with col4:
+        st.markdown(
+            """
+            <div style="text-align: center;">
+                <h3>✍️ Text Improver</h3>
+                <p>Edit and clean your texts.</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+        if st.button(
+           "Improve Text", 
+            use_container_width=True, 
+            on_click = go_to_text
+        ):
+            pass
 
     st.divider()
 

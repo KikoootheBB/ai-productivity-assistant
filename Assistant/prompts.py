@@ -1,9 +1,10 @@
 SUMMARIZE_PROMPT = """
-        Summarize the following document.
+        Analize the following document.
 
-        Provide:
+       Then provide a structured summary with:
         - A short overview
-        - The main points
+        - The Key topics
+        - The main points addressed
         - The most important conclusions
 
         Document:

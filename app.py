@@ -1,5 +1,5 @@
 import streamlit as st
-from assistant.pdf import extract_text
+from assistant.pdf import extract_text, split_text
 from assistant.AI import summarize_text, generate_email, organize_tasks, text_improve
 
 # Page configuration
@@ -203,9 +203,16 @@ elif page == "📄 PDF Summarizer":
             type="primary",
             use_container_width=True
         ):
-            pdf_text = extract_text(uploaded_file)
-            summary = summarize_text(pdf_text)
+            pdf_text, full_length = extract_text(uploaded_file)
+            st.caption(f"PDF text length: {full_length:,} characters")
+            if full_length <= 10000:
+                summary = summarize_text(pdf_text)
+            else:
+                chunks = split_text(pdf_text)
+                summary = summarize_chunk_text(chunks)
+
             st.write(summary)
+
 
 # EMAIL GENERATOR
 elif page == "✉️ Email Generator":

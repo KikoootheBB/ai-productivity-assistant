@@ -11,7 +11,27 @@ SUMMARIZE_PROMPT = """
 
         {text}
         """
- 
+
+CHUNKS_SUMMARY = """
+        Take the following compilation of summaries and synthesize it
+        into a single, cohesive master summary.
+
+        Preserve the original structure and meaning as much as possible.
+
+        Provide:
+
+        - Unified Overview: A concise summary of the entire document.
+        - Core Key Topics: The main topics covered across the document.
+        - Synthesized Main Points: Group related insights together logically.
+        - Overarching Conclusions: The primary takeaways and conclusions.
+
+        Remove duplicate or redundant information.
+
+        Compilation:
+
+        {text}
+"""
+
 EMAIL_GEN_PROMPT = """
         Generate a concise, well-written email from the subject provided below. Use the selected language and tone, and infer appropriate wording and structure from the subject.
         Keep it natural, professional, and to the point.

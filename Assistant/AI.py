@@ -1,6 +1,6 @@
 from openai import OpenAI
 from dotenv import load_dotenv
-from .prompts import SUMMARIZE_PROMPT, EMAIL_GEN_PROMPT, TASK_ORGANIZER_PROMPT, TEXT_IMPROVER_PROMPT
+from .prompts import SUMMARIZE_PROMPT, CHUNKS_SUMMARY, EMAIL_GEN_PROMPT, TASK_ORGANIZER_PROMPT, TEXT_IMPROVER_PROMPT
 import os
 
 load_dotenv()
@@ -18,12 +18,33 @@ def summarize_text(text):
 
     return response.output_text
 
+def summarize_chunks(chunks):
+    summaries = []
+
+    for chunk in chunks:
+        summary = summarize_text(chunk)
+        summaries.append(summary)
+
+    final_summary = chunks_final_summary(summaries)
+
+    return final_summary    
+
+def chunks_final_summary(summaries):
+    prompt = CHUNKS_SUMMARY.format(
+        text="\n\n".join(summaries)
+    )
+        
+    response = client.responses.create(model="gpt-5-nano", input=prompt)
+    
+    return response.output_text
+
 def generate_email(text, lang, tone):
     prompt = EMAIL_GEN_PROMPT.format(
         text=text,
         lang=lang,
         tpne=tone
     )
+
     response = client.responses.create(model="gpt-5-nano", input=prompt)
 
     return response.output_text

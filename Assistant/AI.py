@@ -38,10 +38,10 @@ def chunks_final_summary(summaries):
     
     return response.output_text
 
-def generate_email(text, lang, tone):
+def generate_email(text, language, tone):
     prompt = EMAIL_GEN_PROMPT.format(
         text=text,
-        lang=lang,
+        language=language,
         tpne=tone
     )
 

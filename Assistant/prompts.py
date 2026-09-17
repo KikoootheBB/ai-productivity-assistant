@@ -32,17 +32,22 @@ CHUNKS_SUMMARY = """
         {text}
 """
 
-EMAIL_GEN_PROMPT = """
-        Generate a concise, well-written email from the subject provided below. Use the selected language and tone, and infer appropriate wording and structure from the subject.
-        Keep it natural, professional, and to the point.
+EMAIL_GENERATOR_PROMPT = """
+        Generate a concise, well-written email based on the information provided below.
 
-        Subject: 
+        Follow the selected language and tone.
+        Infer an appropriate email structure from the provided information.
+        Keep the email natural, clear, and to the point.
+
+        Return only the email.
+
+        Topic:
         {text}
 
-        Language: 
-        {lang}
+        Language:
+        {language}
 
-        Tone: 
+        Tone:
         {tone}
         """
 

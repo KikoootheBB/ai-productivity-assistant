@@ -262,8 +262,14 @@ elif page == "✉️ Email Generator":
         if not topic.strip():
             st.warning("Please describe what the email should be about.")
         else:
-            proper_email = generate_email(topic, language, tone)
-            st.write(proper_email)
+            with st.spinner("Generating email..."):
+                proper_email = generate_email(topic, language, tone)
+
+            st.text_area(
+                "Generated email",
+                proper_email,
+                height=300
+            )
 
 # TASK ORGANIZER
 elif page == "✅ Task Organizer":
@@ -333,5 +339,11 @@ elif page == "✍️ Text Improver":
         if not text.strip():
             st.warning("Please enter some text.")
         else:
-            final_text = text_improve(text, action)
-            st.write(final_text)
+            with st.spinner("Improving text..."):    
+                final_text = text_improve(text, action)
+
+            st.text_area(
+                "Improved text",
+                final_text,
+                height=250
+            )

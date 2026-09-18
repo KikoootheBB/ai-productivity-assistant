@@ -301,7 +301,10 @@ elif page == "✅ Task Organizer":
         if not tasks.strip():
             st.warning("Please enter at least one task.")
         else:
-            organized = organize_tasks(tasks)
+            with st.spinner("Organizing tasks..."):
+                organized = organize_tasks(tasks)
+
+            st.subheader("Organized tasks:")
             st.write(organized)
 
 # TEXT IMPROVER
@@ -340,7 +343,7 @@ elif page == "✍️ Text Improver":
             st.warning("Please enter some text.")
         else:
             with st.spinner("Improving text..."):    
-                final_text = text_improve(text, action)
+                final_text = "text_improve(text, action)"
 
             st.text_area(
                 "Improved text",

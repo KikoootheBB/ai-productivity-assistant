@@ -32,7 +32,7 @@ CHUNKS_SUMMARY = """
         {text}
 """
 
-EMAIL_GENERATOR_PROMPT = """
+EMAIL_GEN_PROMPT = """
         Generate a concise, well-written email based on the information provided below.
 
         Follow the selected language and tone.
@@ -52,12 +52,20 @@ EMAIL_GENERATOR_PROMPT = """
         """
 
 TASK_ORGANIZER_PROMPT = """
-        Organize these tasks into a clear, prioritized action list.
-        Group related tasks, identify dependencies, and order them by urgency and importance. 
+        Organize the following tasks into a clear and prioritized action list.
+
+        For each task, provide:
+        - Priority
+        - Task
+        - Dependencies, if any
+
+        Consider urgency and importance when prioritizing.
+        Group related tasks when appropriate.
         Keep each task concise and actionable.
 
         Tasks:
-        {tasks}
+
+        {text}
         """
 
 TEXT_IMPROVER_PROMPT = """

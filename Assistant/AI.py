@@ -1,6 +1,12 @@
 from openai import OpenAI
 from dotenv import load_dotenv
-from .prompts import SUMMARIZE_PROMPT, CHUNKS_SUMMARY, EMAIL_GEN_PROMPT, TASK_ORGANIZER_PROMPT, TEXT_IMPROVER_PROMPT
+from .prompts import(
+    SUMMARIZE_PROMPT, 
+    CHUNKS_SUMMARY, 
+    EMAIL_GEN_PROMPT, 
+    TASK_ORGANIZER_PROMPT, 
+    TEXT_IMPROVER_PROMPT
+)
 import os
 
 load_dotenv()
@@ -9,14 +15,24 @@ client = OpenAI(
     api_key=os.getenv("OPENAI_API_KEY")
 )
 
+class AIError(Exception):
+    pass
+
+def call_ai(prompt):
+     try:
+        response = client.responses.create(model="gpt-5-nano", input=prompt)
+    
+        return response.output_text
+
+     except Exception as e:
+        raise AIError("Unable to generate a response.") from e
+
 def summarize_text(text):
     prompt = SUMMARIZE_PROMPT.format(
         text=text
     )
     
-    response = client.responses.create(model="gpt-5-nano", input=prompt)
-
-    return response.output_text
+    return call_ai(prompt)
 
 def summarize_chunks(chunks):
     summaries = []
@@ -34,29 +50,23 @@ def chunks_final_summary(summaries):
         text="\n\n".join(summaries)
     )
         
-    response = client.responses.create(model="gpt-5-nano", input=prompt)
-    
-    return response.output_text
+    return call_ai(prompt)
 
 def generate_email(text, language, tone):
     prompt = EMAIL_GEN_PROMPT.format(
         text=text,
         language=language,
-        tpne=tone
+        tone=tone
     )
 
-    response = client.responses.create(model="gpt-5-nano", input=prompt)
-
-    return response.output_text
+    return call_ai(prompt)
 
 def organize_tasks(tasks):
     prompt = TASK_ORGANIZER_PROMPT.format(
         tasks=tasks
     )
 
-    response = client.responses.create(model="gpt-5-nano", input=prompt)
-
-    return response.output_text
+    return call_ai(prompt)
 
 def text_improve(text, task):
     prompt = TEXT_IMPROVER_PROMPT.format(
@@ -64,6 +74,4 @@ def text_improve(text, task):
         task=task
     )
 
-    response = client.responses.create(model="gpt-5-nano", input=prompt)
-
-    return response.output_text
+    return call_ai(prompt)

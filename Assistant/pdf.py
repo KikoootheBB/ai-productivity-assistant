@@ -1,21 +1,35 @@
 from pypdf import PdfReader
 import tiktoken
 
+class PDFError(Exception):
+    pass
+
 def extract_text(file):
-    reader = PdfReader(file) # reader calls pypdf to read the file
+    try:    
+        reader = PdfReader(file) # reader calls pypdf to read the file
 
-    full_text = ""
+        full_text = ""
 
-    # Extract each page to raw text, and if it isn't empty add it to full_text
-    for page in reader.pages:
-        text = page.extract_text()
+    
+        # Extract each page to raw text, and if it isn't empty add it to full_text
+        for page in reader.pages:
+            text = page.extract_text()
 
-        if text is not None:
-            full_text += text + "\n\n"
+            if text is not None:
+                full_text += text + "\n\n"
 
-    full_length  = len(full_text) # Get full characters cout of the final text
+        if not full_text.strip():
+            raise PDFError("No readable text found in PDF.")
 
-    return full_text, full_length 
+        full_length  = len(full_text) # Get full characters cout of the final text
+
+        return full_text, full_length 
+
+    except PDFError:
+        raise
+
+    except Exception as e:
+            raise PDFError("Unable to extract text.") from e
 
 def split_text(full_text, chunk_size=4000):
     encoding = tiktoken.get_encoding("o200k_base")

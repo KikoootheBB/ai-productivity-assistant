@@ -219,7 +219,7 @@ elif page == "📄 PDF Summarizer":
             except PDFError:
                 st.error(
                     "⚠️ Unable to read this PDF.\n\n"
-                    "Please upload a valid text PDF."
+                    "Please make sure the file is a valid PDF containing readable text."
                 )
 
             else:
@@ -236,8 +236,8 @@ elif page == "📄 PDF Summarizer":
 
                 except AIError:
                     st.error(
-                        "⚠️ Unable to generate summary.\n\n"
-                        "Please try again."
+                        "⚠️ Unable to generate the summarized text.\n\n"
+                    "Please check your API configuration and try again."
                     )
 
 # EMAIL GENERATOR
@@ -280,7 +280,7 @@ elif page == "✉️ Email Generator":
         type="primary",
         use_container_width=True
     ):
-        if not topic.strip():
+        if not topic or not any(char.isalnum() for char in topic):
             st.warning("Please describe what the email should be about.")
         else:
             try:
@@ -295,8 +295,8 @@ elif page == "✉️ Email Generator":
 
             except AIError:
                 st.error(
-                    "⚠️ Unable to generate email.\n\n"
-                    "Please try again."
+                    "⚠️ Unable to generate email as requested.\n\n"
+                    "Please check your API configuration and try again."
                 )
                 
 # TASK ORGANIZER
@@ -326,7 +326,7 @@ elif page == "✅ Task Organizer":
         type="primary",
         use_container_width=True
     ):
-        if not tasks.strip():
+        if not tasks or not any(char.isalnum() for char in tasks):
             st.warning("Please enter at least one task.")
         else:
             try:
@@ -338,8 +338,8 @@ elif page == "✅ Task Organizer":
 
             except AIError:
                 st.error(
-                    "⚠️ Unable to organize tasks.\n\n"
-                    "Please try again."
+                    "⚠️ Unable to generate the organized tasks.\n\n"
+                    "Please check your API configuration and try again."
                 )
 
 # TEXT IMPROVER
@@ -374,8 +374,8 @@ elif page == "✍️ Text Improver":
         type="primary",
         use_container_width=True
     ):
-        if not text.strip():
-            st.warning("Please enter some text.")
+        if not text or not any(char.isalnum() for char in text):
+            st.warning("Please enter some meaningful text.")
         else:
             try:
                 with st.spinner("Improving text..."):    
@@ -389,6 +389,6 @@ elif page == "✍️ Text Improver":
 
             except AIError:
                 st.error(
-                    "⚠️ Unable to improve text.\n\n"
-                    "Please try again."
+                    "⚠️ Unable to generate improved text.\n\n"
+                    "Please check your API configuration and try again."
                 )

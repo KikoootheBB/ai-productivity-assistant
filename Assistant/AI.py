@@ -68,10 +68,10 @@ def organize_tasks(tasks):
 
     return call_ai(prompt)
 
-def text_improve(text, task):
+def text_improve(text, action):
     prompt = TEXT_IMPROVER_PROMPT.format(
         text=text,
-        task=task
+        action=action
     )
 
     return call_ai(prompt)

@@ -1,81 +1,94 @@
-SUMMARIZE_PROMPT = """
-        Analize the following document.
+SUMMARIZE_PROMPT =  """
+Analyze the following document.
 
-       Then provide a structured summary with:
-        - A short overview
-        - The Key topics
-        - The main points addressed
-        - The most important conclusions
+Provide a structured summary with:
+- A short overview
+- Key topics
+- The main points addressed
+- The most important conclusions
 
-        Document:
+Focus on the information presented in the document.
+Do not add information that is not supported by the text.
 
-        {text}
-        """
+Document:
+
+{text}
+"""
 
 CHUNKS_SUMMARY = """
-        Take the following compilation of summaries and synthesize it
-        into a single, cohesive master summary.
+The following are partial summaries generated from different sections
+of the same document.
 
-        Preserve the original structure and meaning as much as possible.
+Synthesize them into a single, cohesive master summary.
 
-        Provide:
+Preserve the original meaning and structure as much as possible.
 
-        - Unified Overview: A concise summary of the entire document.
-        - Core Key Topics: The main topics covered across the document.
-        - Synthesized Main Points: Group related insights together logically.
-        - Overarching Conclusions: The primary takeaways and conclusions.
+Provide:
 
-        Remove duplicate or redundant information.
+- Unified Overview: A concise summary of the entire document.
+- Core Key Topics: The main topics covered across the document.
+- Synthesized Main Points: Group related insights logically.
+- Overarching Conclusions: The primary takeaways and conclusions.
 
-        Compilation:
+Remove duplicate or redundant information.
+Do not introduce information that is not supported by the summaries.
 
-        {text}
+Partial summaries:
+
+{text}
 """
 
 EMAIL_GEN_PROMPT = """
-        Generate a concise, well-written email based on the information provided below.
+Generate a concise, well-written email based on the information provided below.
 
-        Follow the selected language and tone.
-        Infer an appropriate email structure from the provided information.
-        Keep the email natural, clear, and to the point.
+Follow the selected language and tone.
+Infer an appropriate email structure from the provided information.
+Keep the email natural, clear, and to the point.
 
-        Return only the email.
+Do not invent specific details that were not provided.
+If important information is missing, write the email without making up details.
 
-        Topic:
-        {text}
+Return only the email.
 
-        Language:
-        {language}
+Topic:
+{text}
 
-        Tone:
-        {tone}
-        """
+Language:
+{language}
+
+Tone:
+{tone}
+"""
 
 TASK_ORGANIZER_PROMPT = """
-        Organize the following tasks into a clear and prioritized action list.
+Organize the following tasks into a clear and prioritized action list.
 
-        For each task, provide:
-        - Priority
-        - Task
-        - Dependencies, if any
+For each task, provide:
+- Priority
+- Task
+- Dependencies, if explicitly mentioned
 
-        Consider urgency and importance when prioritizing.
-        Group related tasks when appropriate.
-        Keep each task concise and actionable.
+Consider urgency and importance when prioritizing.
+Group related tasks when appropriate.
+Keep each task concise and actionable.
 
-        Tasks:
+Do not invent tasks, dependencies, or deadlines that were not provided.
 
-        {text}
-        """
+Tasks:
+
+{tasks}
+"""
 
 TEXT_IMPROVER_PROMPT = """
-        Process the provided text according to the selected task.
+Process the provided text according to the selected task.
 
-        Follow the given task precisely, preserve the original meaning, and return only the requested result.
+Follow the task precisely.
+Preserve the original meaning unless the selected task requires otherwise.
+Return only the requested result.
 
-        Task:
-        {task}
+Task:
+{action}
 
-        Text:
-        {text}
-        """
+Text:
+{text}
+"""
